@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="img/logo.svg" alt="Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="requests.html">Requests</a></li>
+                    <li><a href="login.html">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <body>
+    <section class="hero">
+        <div class="container">
+            <h1>Welcome to the Internship Portal</h1>
+            <p>Connect with local businesses and national service organizations</p>
+            <div class="form-container">
+                <input type="text" placeholder="Enter your company name...">
+                <a href="requests.html"><button>Get Interns</button></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="latest-requests">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 left-column">
+                    <h2>Latest Requests</h2>
+                    <table id="request-data">
+                    <p>View the latest internship and service personnel requests from companies.</p>
+                    <div class="company-cards">
+                        <div class="company-card">
+                        <img src="https://enchillgodwill.github.io/ecktech/images/Component1.png" alt="Company X Logo">
+                            <div class="info"> 
+                                <h3>Eck Tech Developers Hub</h3>
+                                <a href="https://bit.ly/ecktech24"> <p>Junior Front End Developer</p></a>
+                                <p>6 months</p>
+                            </div>
+                        </div>
+                        <div class="company-card">
+                            <img src="https://succoreyeanddentalclinic.com/wp-content/uploads/2022/07/succor-logo.jpg" alt="Company Y Logo">
+                            <h3>Succor Eye and Dental Clinic</h3>
+                            <a href="https://succoreyeanddentalclinic.com/"><p>IT and Admin Intern</p></a>
+                            <p>3 months</p>
+                        </div>
+                        <div class="company-card">
+                            <img src="img/logo.svg" alt="Company Z Logo">
+                            <h3>Polymorphlabs</h3>
+                           <a href="https://www.polymorphlabs.io/"><p>Open for All</p></a>
+                            <p>1 year</p>
+                        </div>
+                    </div>
+                </div>
+                <!--<script>
+                    // Retrieve the stored data from localStorage
+                    var requestData = JSON.parse(localStorage.getItem("latestRequest"));
+                
+                    if (requestData) {
+                        // Create the HTML content
+                        var content = `
+                            <div class="request">
+                                <h3>Latest Request</h3>
+                                <p><strong>Company Name:</strong> ${requestData.companyName}</p>
+                                <p><strong>Current Role:</strong> ${requestData.currentRole}</p>
+                                <p><strong>Department:</strong> ${requestData.department}</p>
+                            </div>
+                        `;
+                
+                        // Insert the content into the latest-requests section
+                        document.querySelector(".latest-requests .left-column").innerHTML += content;
+                    } else {
+                        document.querySelector(".latest-requests .left-column").innerHTML += "<p>No recent requests found.</p>";
+                    }
+                </script>-->
+            </div>
+        </div>
+        <h1>Internship Applications</h1>
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>Current Role</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+    <script>
+        // Google Sheets URL - Ensure you use the CSV format for easy parsing
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/1SdZVq85XN1fW0aJhthzgHZmWjtNrJDOWSMgvfMWMUYo/pub?gid=0&single=true&output=csv';
+
+        async function fetchData() {
+            try {
+                const response = await fetch(sheetUrl);
+                const data = await response.text();
+
+                // Parse CSV data
+                const rows = data.split('\n').slice(1); // Remove the header row
+                const tableBody = document.querySelector('#data-table tbody');
+
+                rows.forEach(row => {
+                    const cols = row.split(',');
+
+                    // Create a new table row
+                    const tr = document.createElement('tr');
+                    cols.forEach(col => {
+                        const td = document.createElement('td');
+                        td.textContent = col.trim();
+                        tr.appendChild(td);
+                    });
+                    tableBody.appendChild(tr);
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        // Fetch data when the page loads
+        fetchData();
+
+    </script>
+
+    </section>
+
+    <section class="company-section companies-hiring">
+        <h2>Companies Hiring</h2>
+        <p>Explore companies offering internships and service personnel opportunities.</p>
+        <div class="company-grid container">
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.theofficialboard.com%2Fimg%2FtwitterCompanyBigImages%2F44418.jpg&f=1&nofb=1&ipt=8497931cf8e58425b2dcffc40e99c75b50ff526a4f44733cc56c561fdc19d3f8&ipo=images" alt="MTN Ghana Logo">
+                <p>MTN Ghana</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2F4.bp.blogspot.com%2F-o1nqxWoSw24%2FThdshPGqVuI%2FAAAAAAAAAXs%2FFWiG8SuVLqc%2Fs1600%2F1238083595_VodafoneLogo_REV.jpg&f=1&nofb=1&ipt=ea5183bd4ef3954d2821035e9a754f93b2b830d65b636e7ed69f70c96ad86040&ipo=images" alt="Vodafone Ghana Logo">
+                <p>Vodafone Ghana</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia-exp1.licdn.com%2Fdms%2Fimage%2FC4D05AQHJD3C5NeEB4g%2Fvideocover-high%2F0%2F1660028117841%3Fe%3D2147483647%26v%3Dbeta%26t%3DoQP0h1pSyMwDPd5aD1UEju1z3zpK5xRyngoFPMZ38oU&f=1&nofb=1&ipt=88e71852a7e05f7ddf91f0577a153331629dc0ab4200ef0c7197e3733b14e0b7&ipo=images" alt="Ecobank Ghana Logo">
+                <p>Ecobank Ghana</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fucc.edu.gh%2Fsites%2Fdefault%2Ffiles%2Fbog-logo.png&f=1&nofb=1&ipt=d5675855f24ff10ce0494ec7b1c3f4bea9fd2482cfbd734d2b517991c0628964&ipo=images" alt="Bank of Ghana Logo">
+                <p>Bank of Ghana</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F280x280_RS%2F12%2F07%2Feb%2F1207eb2347e14071f89c59969688e3fe.jpg&f=1&nofb=1&ipt=93b7f25343d12672bbd7488f672d126c3d6a91873ce24b8e66d94015817eabdc&ipo=images" alt="UT Bank Logo">
+                <p>UT Bank</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.techfocus24.com%2Fwp-content%2Fuploads%2F2023%2F06%2Fd586fa41-972d-4baf-9c23-8fa09208f342.jpeg&f=1&nofb=1&ipt=06b625ddd527cb7eac82f957934a49e01f87e27388bba163c2bc27a4534f9689&ipo=images" alt="AirtelTigo Ghana Logo">
+                <p>AirtelTigo Ghana</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcitibusinessnews.com%2Fnew%2Fwp-content%2Fuploads%2F2020%2F07%2FCalBank-700x375.jpg&f=1&nofb=1&ipt=7bc526e629da460a4f2b348e8ed4b4b8733da1c8514e9a17856641e70be845b7&ipo=images" alt="CalBank Logo">
+                <p>CalBank</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.ghanayello.com%2Fimg%2Fgh%2Fb%2F1529323597-53-stanbic-bank-gh-ltd.jpg&f=1&nofb=1&ipt=29b88cf9b6e5f56251f9bf48407e9e5952537e14fd5e08371edea53f9f68ae29&ipo=images" alt="Stanbic Bank Logo">
+                <p>Stanbic Bank</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.theghanareport.com%2Fwp-content%2Fuploads%2F2020%2F05%2Fabsa_logo.png&f=1&nofb=1&ipt=cf6b04886547e0d50a28a37c44bcd2c91a0c03d386590851595d5b9e73358737&ipo=imagesg" alt="Absa Bank Ghana Logo">
+                <p>Absa Bank Ghana</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.ghanayello.com%2Fimg%2Fgh%2Fb%2F1528801292-93-ghana-oil-co-ltd-goil.jpg&f=1&nofb=1&ipt=ba3fef81929e179bc2954ab1f661ad52fe446d7a074abd105b0a2fd97daa8381&ipo=images" alt="GOIL Ghana Logo">
+                <p>GOIL Ghana</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fshippers.org.gh%2Fwp-content%2Fuploads%2F2019%2F04%2FGSA_DHL-1.png&f=1&nofb=1&ipt=b6ea352f1de0fad92d1e830c8d21103b7d1a9cad20fd1c1848569ceccaec7411&ipo=images" alt="DHL Ghana Logo">
+                <p>DHL Ghana</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.grapheine.com%2Fwp-content%2Fuploads%2F2021%2F06%2FLogo-TotalEnergies-2021-1.jpg&f=1&nofb=1&ipt=29473cfb598857fe20c730acf4f58f5e30e80fe5c2cb30144c69ecde9ffe6e2e&ipo=images" alt="TotalEnergies Ghana Logo">
+                <p>TotalEnergies Ghana</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F1.bp.blogspot.com%2F-rWJiYt2cL28%2FXsLqoFdBiaI%2FAAAAAAAAATk%2FY8Q8WwOV1eAPiyBJkf8rHyZRXOHr8iUygCLcBGAsYHQ%2Fs1600%2Fkpmg%252Bghana%252Brecruitment%252B2020.jpg&f=1&nofb=1&ipt=adc49b984239e830ecfaef35d0c1442d26179af190404851702a6cfc006f984e&ipo=images" alt="KPMG Ghana Logo">
+                <p>KPMG Ghana</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fthenetprenuer.com%2Fwp-content%2Fuploads%2F2023%2F04%2Fpwc-bursary-2015-1.png&f=1&nofb=1&ipt=eab27bfb04039350f9bf09e62b0078d10cbdf7d6164c2fbfe0762e0abbfb5fa3&ipo=images" alt="PwC Ghana Logo">
+                <p>PwC Ghana</p>
+            </div>
+            <div class="company-card">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fassets.turbologo.com%2Fblog%2Fes%2F2021%2F09%2F22083444%2Funilever.png&f=1&nofb=1&ipt=13ba75109080ab19549f2cd8ff10c1c7bd744f7204cce4a573c42818292bffaa&ipo=images" alt="Unilever Ghana Logo">
+                <p>Unilever Ghana</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="testimonial-container">
+        <div class="container">
+            <p>                Join our university to provide impactful internship opportunities and national service placements</p>
+        </div>
+    </section>
+
+   
+</body>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/66c73a2450c10f7a009f443d/1i5t3m88d';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+<footer>
+    <div class="container">
+        <p>&copy; Internship Portal 2021. All rights reserved. <a href="#">Terms of Use</a> <a href="#">Privacy Policy</a></p>
+    </div>
+</footer>
+</html>

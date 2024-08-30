@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dash.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Add some styles for the modal (popup form) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container"></div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Admin Dashboard</h1>
+                    <h2>Manage interns, tasks, and reports efficiently.</h2>
+                    <a href="#intern-registration"><button>Assign New Intern</button></a>
+                </div>
+            </div>
+        </section>
+
+        <section class="internships">
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                table, th, td {
+                    border: 1px solid black;
+                }
+                th, td {
+                    padding: 8px;
+                    text-align: left;
+                }
+            </style>
+            <div class="container">
+                <h2>Available Internships</h2>
+                <p>Explore internships and apply now.</p>
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Organisation</th>
+                            <th>Registration Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be inserted here -->
+                    </tbody>
+                </table>
+                <script>
+                    // Google Sheets URL - Ensure you use the CSV format for easy parsing
+                    const sheetUrl = 'https://docs.google.com/spreadsheets/d/1SdZVq85XN1fW0aJhthzgHZmWjtNrJDOWSMgvfMWMUYo/pub?gid=0&single=true&output=csv';
+            
+                    async function fetchData() {
+                        try {
+                            const response = await fetch(sheetUrl);
+                            const data = await response.text();
+            
+                            // Parse CSV data
+                            const rows = data.split('\n').slice(1); // Remove the header row
+                            const tableBody = document.querySelector('#data-table tbody');
+            
+                            rows.forEach(row => {
+                                const cols = row.split(',');
+            
+                                // Create a new table row
+                                const tr = document.createElement('tr');
+                                cols.forEach(col => {
+                                    const td = document.createElement('td');
+                                    td.textContent = col.trim();
+                                    tr.appendChild(td);
+                                });
+                                tableBody.appendChild(tr);
+                            });
+                        } catch (error) {
+                            console.error('Error fetching data:', error);
+                        }
+                    }
+            
+                    // Fetch data when the page loads
+                    fetchData();
+
+                </script>
+                <br><br>
+                <div class="internship-grid">
+                    <div class="internship-card">
+                        <div class="card-header">
+                            <span class="tag">Paid</span>
+                        </div>
+                        <img src="https://source.unsplash.com/featured/1600x900/?internship,work,computer" alt="Internship A">
+                        <h3>Internship A</h3>
+                        <p>Location: City A</p>
+                    </div>
+                    <div class="internship-card">
+                        <div class="card-header">
+                            <span class="tag">Remote</span>
+                        </div>
+                        <img src="https://source.unsplash.com/featured/1600x900/?remote,internship,work" alt="Internship B">
+                        <h3>Internship B</h3>
+                        <p>Location: City B</p>
+                    </div>
+                    <div class="internship-card">
+                        <div class="card-header">
+                            <span class="tag">Part-time</span>
+                        </div>
+                        <img src="https://source.unsplash.com/featured/1600x900/?internship,work,team" alt="Internship C">
+                        <h3>Internship C</h3>
+                        <p>Location: City C</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div id="dataModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Registered Interns</h2>
+                    <div id="modal-data">
+                        <!-- Data will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="intern-registration">
+            <div class="container">
+                <h2>Intern Registration</h2>
+                <p>Onboard new interns to kickstart their internship journey.</p>
+                <button id="openModalBtn">Register Intern</button>
+            </div>
+        </section>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form action="https://formcarry.com/s/kiCnk-qhkMH"
+                method="POST"
+                enctype="multipart/form-data" id="registerInternForm">
+                    <div class="form-group">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" id="full-name" placeholder="Enter Full Name" required><br><br>
+                        <label for="department">Department</label>
+                        <input type="text" id="full-name" placeholder="Student Department Name" required><br><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="organisation">Organisation</label>
+                        <select id="organisation"><br><br>
+                            <option value="options">Select Organisation</option>
+                            <option value="MTN Ghana">MTN Ghana</option>
+                            <option value="Vodafone Ghana">Vodafone Ghana</option>
+                            <option value="Ecobank Ghana">Ecobank Ghana</option>
+                            <option value="Bank of Ghana">Bank of Ghana</option>
+                            <option value="UT Bank">UT Bank</option>
+                            <option value="AirtelTigo Ghana">AirtelTigo Ghana</option>
+                            <option value="CalBank">CalBank</option>
+                            <option value="Stanbic Bank">Stanbic Bank</option>
+                            <option value="Absa Bank Ghana">Absa Bank Ghana</option>
+                            <option value="BGOIL Ghana">GOIL Ghana</option>
+                            <option value="DHL Ghana">DHL Ghana</option>
+                            <option value="TotalEnergies Ghana">KPMG Ghana</option>
+                            <option value="PwC Ghana">PwC Ghana</option>
+                            <option value="Unilever Ghana">Unilever Ghana</option>
+                        </select>
+                    </div><br>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <section class="student-assignment">
+            <div class="container">
+                <h2>Student Assignment</h2>
+                <p>Current tasks that need completion.</p>
+                <div class="assignment-grid" id="assignmentGrid">
+                    <div class="assignment-card">
+                        <img src="https://cdn-icons-png.flaticon.com/128/1077/1077063.png" alt="Company 1"><br>
+                        <h3>Theo the Cudler</h3>
+                        <p>Deadline: 12/31/2023</p>
+                        <p>Status: In Progress</p>
+                    </div>
+                    <div class="assignment-card">
+                        <img src="https://cdn-icons-png.flaticon.com/128/1077/1077114.png" alt="Company 2"><br>
+                        <h3>Joseph Atuguba</h3>
+                        <p>Deadline: 01/15/2024</p>
+                        <p>Status: Pending</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="performance-metrics">
+            <div class="container">
+                <h2>Performance Metrics</h2>
+                <p>View key metrics of the internship system.</p>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>Completed Tasks</h3>
+                        <p id="completedTasks">75</p>
+                        <p>+10 from last month</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Interns Enrolled</h3>
+                        <p id="internsEnrolled">50</p>
+                        <p>+5 from last month</p>
+                    </div>
+                    
+                </div>
+                <script>
+                    // Google Sheets URL - Ensure you use the CSV format for easy parsing
+                    const sheetUrl = 'https://docs.google.com/spreadsheets/d/1SdZVq85XN1fW0aJhthzgHZmWjtNrJDOWSMgvfMWMUYo/pub?gid=0&single=true&output=csv';
+            
+                    async function fetchData() {
+                        try {
+                            const response = await fetch(sheetUrl);
+                            const data = await response.text();
+            
+                            // Parse CSV data
+                            const rows = data.split('\n').slice(1); // Remove the header row
+                            const modalData = document.querySelector('#modal-data');
+            
+                            // Clear previous data
+                            modalData.innerHTML = '';
+            
+                            rows.forEach(row => {
+                                const cols = row.split(',');
+            
+                                // Create a new paragraph for each intern
+                                const p = document.createElement('p');
+                                p.textContent = `Name: ${cols[0].trim()}, Email: ${cols[1].trim()}, Organisation: ${cols[2].trim()}, Registration Date: ${cols[3].trim()}`;
+                                modalData.appendChild(p);
+                            });
+                        } catch (error) {
+                            console.error('Error fetching data:', error);
+                        }
+                    }
+            
+                    // Modal functionality
+                    const modal = document.getElementById("dataModal");
+                    const btn = document.getElementById("showDataBtn");
+                    const span = document.getElementsByClassName("close")[0];
+            
+                    btn.onclick = function() {
+                        fetchData();  // Fetch data each time before showing the modal
+                        modal.style.display = "block";
+                    }
+            
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
+            
+                    window.onclick = function(event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+            
+                    // Fetch data every 30 seconds (optional if you want to auto-update in the background)
+                    setInterval(fetchData, 30000);
+                </script>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Internship Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for modal functionality
+        const modal = document.getElementById("myModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeModalBtn = document.getElementsByClassName("close")[0];
+        const registerInternForm = document.getElementById("registerInternForm");
+        const assignmentGrid = document.getElementById("assignmentGrid");
+
+        // Open the modal
+        openModalBtn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // Close the modal
+        closeModalBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Close the modal if clicked outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Form submission handler
+        registerInternForm.onsubmit = function(event) {
+            event.preventDefault();
+
+            // Get form data
+            const fullName = document.getElementById("full-name").value;
+            const organisation = document.getElementById("organisation").value;
+
+            // Add new intern to the Student Assignment section
+            const newCard = document.createElement("div");
+            newCard.classList.add("assignment-card");
+            newCard.innerHTML = `
+                <img src="https://img.icons8.com/color/48/000000/student-male.png" alt="New Intern">
+                <h3>${fullName}</h3>
+                <p>Organisation: ${organisation}</p>
+                <p>Status: Newly Registered</p>
+            `;
+            assignmentGrid.appendChild(newCard);
+
+            // Update performance metrics
+            const internsEnrolled = document.getElementById("internsEnrolled");
+            const completedTasks = document.getElementById("completedTasks");
+            internsEnrolled.textContent = parseInt(internsEnrolled.textContent) + 1;
+            completedTasks.textContent = parseInt(completedTasks.textContent) + 1;
+
+            // Close the modal and reset the form
+            modal.style.display = "none";
+            registerInternForm.reset();
+        }
+    </script>
+</body>
+</html>
