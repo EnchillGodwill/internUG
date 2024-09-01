@@ -7,6 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Internship Portal</title>
     <link rel="stylesheet" href="requests.css">
+
+
+      <style>
+        /* Add any styling you need */
+        .message-container {
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -38,6 +46,25 @@
         </main>
     </section>
 
+    <section class="message-container">
+        <h1 id="welcomeMessage"></h1>
+        <p>Fill the form to request your intern/national service personnel.</p>
+    </section>
+ <script>
+        // Function to get the URL parameter
+        function getParameterByName(name) {
+            let url = new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+
+        // Get the company name from the URL
+        const companyName = getParameterByName('company');
+
+        // Display the personalized message
+        if (companyName) {
+            document.getElementById('welcomeMessage').textContent = `Hello ${companyName}!`;
+        }
+    </script>
     <section class="form">
         <div class="container-form">
             <h3>Send Request</h3>
