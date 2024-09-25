@@ -45,8 +45,7 @@
                 <h2>Welcome to the Internship Portal</h2>
                 <p>Connect with our university for your intern and service personnel needs.</p>  
                 <div class="buttons">
-                        <button>Internship Requests</button>
-                        <button>National Service Personnel requests</button>
+                        <button>Apply to an Internship </button>
                 </div>
             </div>
         </main>
@@ -54,7 +53,7 @@
 
     <section class="message-container">
         <h1 id="welcomeMessage"></h1>
-        <p>Fill the form to request your intern/national service personnel.</p>
+        <p id="nobackground">Fill the form to request your intern/national service personnel.</p>
     </section>
  <script>
         // Function to get the URL parameter
@@ -73,14 +72,14 @@
     </script>
     <section class="form">
         <div class="container-form">
-            <h3>Send Request</h3>
+            <h3>Send a form</h3>
             <p>(Please fill out the required fields for internship request)</p>
             <form action="https://api.sheetmonkey.io/form/fcDoX95Scm14ZbaWJmQk68" method="post">
-                <label for="company-name">Company Name:</label>
-                <input type="text" id="company-name" name="company-name" placeholder="Company Name">
-                <label for="current-role">Current Role:</label>
-                <input type="text" id="current-role" name="current-role" placeholder="Current Role">
-                <label for="department">Department:</label>
+                <label for="company-name">Full name:</label>
+                <input type="text" id="full name" name="Full name" placeholder="Full name:">
+                <label for="current-role">Skills</label>
+                <input type="text" id="skills" name="skills" placeholder="skills">
+                <label for="department">Department applying to:</label>
                 <input type="text" id="department" name="department" placeholder="Department">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" placeholder="Email">
@@ -115,7 +114,7 @@
                 </div>
 
                 <div class="container-send">
-                    <h3>Send Request to Departments</h3>
+                    <h3>Send Request to Companies</h3>
                     <div class="table">
                         <table>
                             <thead>
